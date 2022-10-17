@@ -8,14 +8,14 @@ Determiná que será impreso en la consola, sin ejecutar el código.
 > Investiga cuál es la diferencia entre declarar una variable con `var` y directamente asignarle un valor.
 
 ```javascript
-x = 1;
-var a = 5;
-var b = 10;
-var c = function(a, b, c) {
+x = 1; //variable en scope general
+var a = 5; // same
+var b = 10; //same
+var c = function(a, b, c) { //funcion dentro de una variable
   var x = 10;
   console.log(x);
   console.log(a);
-  var f = function(a, b, c) {
+  var f = function(a, b, c) { //funcion dentro de una funcion
     b = a;
     console.log(b);
     b = c;
@@ -75,7 +75,7 @@ console.log(instructor);
 var instructor = "Tony";
 let pm = "Franco";
 if (true) {
-    var instructor = "The Flash";
+    var instructor = "The Flash"; //nueva variable local
     let pm = "Reverse Flash";
     console.log(instructor);
     console.log(pm);
@@ -127,7 +127,8 @@ function test() {
 
    var zz = 1;
    function foo() {
-      return 2;
+      var as = 2;
+     return ''+as+zz;
    }
 }
 
@@ -189,7 +190,7 @@ Considerando el siguiente código, ¿Cuál sería el orden en el que se muestra 
 
 ```javascript
 function printing() {
-   console.log(1); //primero este se EJECUTA
+console.log(1); //primero este se EJECUTA
    setTimeout(function() { console.log(2); }, 1000); //Luego este al apsar 1 segundo
    setTimeout(function() { console.log(3); }, 0); //Luego este
    console.log(4); //Luego este
