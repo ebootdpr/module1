@@ -14,8 +14,9 @@ const otroContador = counter()
 otroContador()      // 1
 otroContador()      // 2 */
 function counter() {
-  return function(){
-    
+  var c = 1
+  return function () {
+    return c++
   }
 }
 
@@ -37,53 +38,80 @@ otra vez cálculos que ya se hicieron anteriormente.
   squareCache(5)    // invocará a square(5), almacenará el resultado y lo retornará
   squareCache(5)    // no volverá a invocar a square, simplemente buscará en la caché cuál es el resultado de square(5) y lo retornará (tip: si usaste un objeto, podés usar hasOwnProperty) */
 
-function cacheFunction(cb) {}
+/* function cacheFunction(cb) {
+  var cache = {}
+  return function (arg) {
+    if (cache.hasOwnProperty(arg)) {
+      return cache[arg]
+    } else {
+      cache[arg] = cb(arg)
+      return cache[arg]
+    }
+  }
+} */
+
+function cacheFunction(cb) {
+  let cache = {} //tiene q estar adentro para q el cache sea unico para cada funcion 
+  return function(arg){
+      if(!cache.hasOwnProperty(arg)) cache[arg] = cb(arg)
+      return cache[arg]
+  }
+} 
 
 //----------------------------------------
 
 // Bind
 
 var instructor = {
-   nombre: 'Franco',
-   edad: 25,
+  nombre: 'Franco',
+  edad: 25,
 };
 
 var alumno = {
-   nombre: 'Juan',
-   curso: 'FullStack',
+  nombre: 'Juan',
+  curso: 'FullStack',
 };
 
-function getNombre() {}
+function getNombre() { }
 
 /*
-  Ejercicio 3
-  IMPORTANTE: no modificar el código de arriba (variables instructor y alumno, y función getNombre)
-  Usando el método bind() guardar, en las dos variables declaradas a continuación, dos funciones que actúen como getNombre pero retornen el nombre del instructor y del alumno, respectivamente.
+Ejercicio 3
+IMPORTANTE: no modificar el código de arriba (variables instructor y alumno, y función getNombre)
+Usando el método bind() 
+guardar, en las dos variables declaradas a continuación, dos funciones
+que actúen como getNombre pero retornen el nombre del instructor y del alumno, respectivamente.
 */
+function getNombre2() { return this.nombre}
 
-let getNombreInstructor = getNombre.bind();
-let getNombreAlumno = getNombre.bind();
+let getNombreInstructor = getNombre2.bind(instructor);
+let getNombreAlumno = getNombre2.bind(alumno);
 
 /*
   Ejercicio 4
-  Sin modificar la función crearCadena, usar bind para guardar, en las tres variables declaradas a continuación, tres funciones que retornen una cadena (string) y el delimitador especificado (asteriscos, guiones, y guiones bajos, respectivamente). Las funciones obtenidas deberían recibir solamente un argumento - la cadena de texto - ya que los otros argumentos habrán sido "bindeados". 
+  Sin modificar la función crearCadena, usar bind para guardar, en las tres variables declaradas a 
+  continuación, tres funciones que retornen una cadena (string) y el delimitador especificado 
+  (asteriscos, guiones, y guiones bajos, respectivamente). 
+  Las funciones obtenidas deberían recibir solamente un argumento -
+   la cadena de texto - ya que los otros argumentos habrán sido "bindeados". 
 */
 
-function crearCadena(delimitadorIzquierda, delimitadorDerecha, cadena) {}
+function crearCadena(izq, der, cadena) {
+  return izq+cadena+der
+ }
 
-let textoAsteriscos = crearCadena.bind();
-let textoGuiones = crearCadena.bind();
-let textoUnderscore = crearCadena.bind();
+let textoAsteriscos = crearCadena.bind(null,'*','*');
+let textoGuiones = crearCadena.bind(null,'-','-');
+let textoUnderscore = crearCadena.bind(null,'_','_');
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
 
 module.exports = {
-   counter,
-   cacheFunction,
-   getNombreInstructor,
-   getNombreAlumno,
-   textoAsteriscos,
-   textoGuiones,
-   textoUnderscore,
+  counter,
+  cacheFunction,
+  getNombreInstructor,
+  getNombreAlumno,
+  textoAsteriscos,
+  textoGuiones,
+  textoUnderscore,
 };
